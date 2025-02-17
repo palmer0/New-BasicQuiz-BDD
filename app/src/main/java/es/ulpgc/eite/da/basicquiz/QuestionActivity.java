@@ -265,8 +265,14 @@ public class QuestionActivity extends AppCompatActivity {
         if (requestCode == STATS_REQUEST && resultCode == RESULT_OK && intent != null) {
             if (intent.getBooleanExtra(StatsActivity.EXTRA_EXIT, false)) {
                 finish(); // Finalizar app
-            } else if (intent.getBooleanExtra(StatsActivity.EXTRA_RESET_QUIZ, false)) {
+
+            } else if (intent.getBooleanExtra(StatsActivity.EXTRA_RESET, false)) {
                 resetQuiz(); // Reiniciar Quiz
+
+            } else if (intent.getBooleanExtra(StatsActivity.EXTRA_BACK, false)) {
+                nextButtonEnabled = false;
+                nextButton.setEnabled(nextButtonEnabled);
+
             }
         }
 
@@ -335,8 +341,8 @@ public class QuestionActivity extends AppCompatActivity {
     @SuppressWarnings("ALL")
     private void openStatsScreen() {
         Intent intent = new Intent(this, StatsActivity.class);
-        intent.putExtra(StatsActivity.EXTRA_TOTAL_QUESTIONS, totalQuestions);
-        intent.putExtra(StatsActivity.EXTRA_CORRECT_ANSWERS, correctAnswers);
+        intent.putExtra(StatsActivity.EXTRA_QUESTIONS, totalQuestions);
+        intent.putExtra(StatsActivity.EXTRA_ANSWERS, correctAnswers);
         startActivityForResult(intent, STATS_REQUEST); // Código de solicitud
     }
 
