@@ -18,7 +18,8 @@ public class StatsActivity extends AppCompatActivity {
     public static final String EXTRA_EXIT = "EXTRA_EXIT";
     public static final String EXTRA_RESET_QUIZ = "EXTRA_RESET_QUIZ";
 
-    private TextView statsText;
+    //private TextView statsField;
+    private TextView totalQuestionsField, correctAnswersField;
     private Button restartButton, exitButton;
 
     @Override
@@ -27,7 +28,9 @@ public class StatsActivity extends AppCompatActivity {
         setContentView(R.layout.activity_stats);
         setTitle(R.string.stats_screen_title);
 
-        statsText = findViewById(R.id.statsText);
+        //statsField = findViewById(R.id.statsText);
+        totalQuestionsField = findViewById(R.id.totalQuestionsField);
+        correctAnswersField = findViewById(R.id.correctAnswersField);
         restartButton = findViewById(R.id.restartButton);
         exitButton = findViewById(R.id.exitButton);
 
@@ -36,7 +39,13 @@ public class StatsActivity extends AppCompatActivity {
         int correctAnswers = getIntent().getIntExtra(EXTRA_CORRECT_ANSWERS, 0);
 
         // Mostrar resultados
-        statsText.setText(getString(R.string.stats_message, correctAnswers, totalQuestions));
+        totalQuestionsField.setText(
+            getString(R.string.total_questions_text) + ": " + totalQuestions
+        );
+        correctAnswersField.setText(
+            getString(R.string.correct_answers_text) + ": " + correctAnswers
+        );
+        //statsText.setText(getString(R.string.stats_message, correctAnswers, totalQuestions));
 
         // Reiniciar Quiz
         restartButton.setOnClickListener(v -> onRestartButtonClicked());

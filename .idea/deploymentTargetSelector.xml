@@ -7,10 +7,10 @@
       </SelectionState>
       <SelectionState runConfigName="QuizTests">
         <option name="selectionMode" value="DROPDOWN" />
-        <DropdownSelection timestamp="2025-01-16T07:44:34.158865Z">
+        <DropdownSelection timestamp="2025-02-17T21:12:13.870836Z">
           <Target type="DEFAULT_BOOT">
             <handle>
-              <DeviceId pluginId="LocalEmulator" identifier="path=/Users/Luis/.android/avd/Pixel_7a_API_28_9.0.avd" />
+              <DeviceId pluginId="LocalEmulator" identifier="path=/Users/Luis/.android/avd/Pixel_9_Pro_API_28.avd" />
             </handle>
           </Target>
         </DropdownSelection>
