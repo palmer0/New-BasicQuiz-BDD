@@ -160,7 +160,7 @@ public class QuestionActivity extends AppCompatActivity {
         falseButton.setEnabled(!nextButtonEnabled);
         trueButton.setEnabled(!nextButtonEnabled);
 
-        if (questionIndex == questionsArray.length-1) {
+        if (nextButtonEnabled && questionIndex == questionsArray.length-1) {
             nextButtonEnabled = false;
             statsButtonEnabled = true;
 
@@ -270,8 +270,25 @@ public class QuestionActivity extends AppCompatActivity {
             sin poder avanzar después de ver la respuesta correcta.
             */
             if (answerCheated) {
-                nextButtonEnabled = true;
-                onNextButtonClicked();
+
+                //nextButtonEnabled = true;
+                //onNextButtonClicked();
+
+                // si vemos respuesta correcta a ultima pregunta
+                if (questionIndex == questionsArray.length-1) {
+                    nextButtonEnabled = false;
+                    statsButtonEnabled = true;
+
+                    cheatButton.setEnabled(nextButtonEnabled);
+                    falseButton.setEnabled(nextButtonEnabled);
+                    trueButton.setEnabled(nextButtonEnabled);
+                    statsButton.setEnabled(statsButtonEnabled);
+
+                } else {
+                    nextButtonEnabled = true;
+                    onNextButtonClicked();
+
+                }
             }
 
         }
