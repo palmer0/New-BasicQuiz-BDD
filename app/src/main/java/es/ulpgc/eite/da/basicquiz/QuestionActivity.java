@@ -284,6 +284,11 @@ public class QuestionActivity extends AppCompatActivity {
 
             //Log.d(TAG, "answerCheated: " + answerCheated);
 
+            /*
+            Si eliminamos "nextButtonEnabled = true",
+            nextButton quedará deshabilitado, y el usuario quedará atascado
+            sin poder avanzar después de ver la respuesta correcta.
+            */
             if (answerCheated) {
                 nextButtonEnabled = true;
                 onNextButtonClicked();

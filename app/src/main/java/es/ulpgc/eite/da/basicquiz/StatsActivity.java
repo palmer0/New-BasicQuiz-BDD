@@ -22,6 +22,8 @@ public class StatsActivity extends AppCompatActivity {
     private TextView totalQuestionsField, correctAnswersField;
     private Button restartButton, exitButton;
 
+    private int correctAnswers, totalQuestions;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -30,16 +32,27 @@ public class StatsActivity extends AppCompatActivity {
 
         Log.d(TAG, "onCreate");
 
+        initLayoutData();
+        linkLayoutComponents();
+        updateLayoutContent();
+        initLayoutButtons();
+
+        /*
         //statsField = findViewById(R.id.statsText);
         totalQuestionsField = findViewById(R.id.totalQuestionsField);
         correctAnswersField = findViewById(R.id.correctAnswersField);
+
         restartButton = findViewById(R.id.restartButton);
         exitButton = findViewById(R.id.exitButton);
+        */
 
+        /*
         // Obtener valores pasados desde pantalla "Question"
         int totalQuestions = getIntent().getIntExtra(EXTRA_QUESTIONS, 0);
         int correctAnswers = getIntent().getIntExtra(EXTRA_ANSWERS, 0);
+        */
 
+        /*
         // Mostrar resultados
         totalQuestionsField.setText(
             getString(R.string.total_questions_text) + ": " + totalQuestions
@@ -48,7 +61,30 @@ public class StatsActivity extends AppCompatActivity {
             getString(R.string.correct_answers_text) + ": " + correctAnswers
         );
         //statsText.setText(getString(R.string.stats_message, correctAnswers, totalQuestions));
+        */
 
+
+        /*
+        // Reiniciar Quiz
+        restartButton.setOnClickListener(v -> onRestartButtonClicked());
+        // Finalizar app
+        exitButton.setOnClickListener(v -> onExitButtonClicked());
+        //exitButton.setOnClickListener(v -> finishAffinity());
+        */
+    }
+
+    private void updateLayoutContent() {
+
+        // Mostrar resultados
+        totalQuestionsField.setText(
+            getString(R.string.total_questions_text) + ": " + totalQuestions
+        );
+        correctAnswersField.setText(
+            getString(R.string.correct_answers_text) + ": " + correctAnswers
+        );
+    }
+
+    private void initLayoutButtons() {
         // Reiniciar Quiz
         restartButton.setOnClickListener(v -> onRestartButtonClicked());
         // Finalizar app
@@ -56,6 +92,22 @@ public class StatsActivity extends AppCompatActivity {
         //exitButton.setOnClickListener(v -> finishAffinity());
     }
 
+    private void linkLayoutComponents() {
+
+        //statsField = findViewById(R.id.statsText);
+        totalQuestionsField = findViewById(R.id.totalQuestionsField);
+        correctAnswersField = findViewById(R.id.correctAnswersField);
+
+        restartButton = findViewById(R.id.restartButton);
+        exitButton = findViewById(R.id.exitButton);
+    }
+
+    private void initLayoutData() {
+
+        // Obtener valores pasados desde pantalla "Question"
+        totalQuestions = getIntent().getIntExtra(EXTRA_QUESTIONS, 0);
+        correctAnswers = getIntent().getIntExtra(EXTRA_ANSWERS, 0);
+    }
 
     @Override
     protected void onResume() {
@@ -89,23 +141,43 @@ public class StatsActivity extends AppCompatActivity {
     @SuppressWarnings("ALL")
     public void onBackPressed() {
         //super.onBackPressed();
+        Log.d(TAG, "onBackPressed");
 
+        setQuestionResult(EXTRA_BACK);
+
+        /*
         Intent intent = new Intent();
         intent.putExtra(EXTRA_BACK, true);
         setResult(RESULT_OK, intent);
         finish(); // Finalizar pantalla "Stats"
+        */
     }
 
     private void onExitButtonClicked() {
+        setQuestionResult(EXTRA_EXIT);
+
+        /*
         Intent intent = new Intent();
         intent.putExtra(EXTRA_EXIT, true);
         setResult(RESULT_OK, intent);
         finish(); // Finalizar pantalla "Stats"
+        */
     }
 
     private void onRestartButtonClicked() {
+        setQuestionResult(EXTRA_RESET);
+
+        /*
         Intent intent = new Intent();
         intent.putExtra(EXTRA_RESET, true);
+        setResult(RESULT_OK, intent);
+        finish(); // Finalizar pantalla "Stats"
+        */
+    }
+
+    private void setQuestionResult(String extraKey) {
+        Intent intent = new Intent();
+        intent.putExtra(extraKey, true);
         setResult(RESULT_OK, intent);
         finish(); // Finalizar pantalla "Stats"
     }
