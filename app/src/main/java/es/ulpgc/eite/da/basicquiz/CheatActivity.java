@@ -29,7 +29,6 @@ public class CheatActivity extends AppCompatActivity {
     super.onCreate(savedInstanceState);
     setContentView(R.layout.activity_cheat);
     setTitle(R.string.cheat_screen_title);
-
     Log.d(TAG, "onCreate");
 
     linkLayoutComponents();
@@ -55,53 +54,29 @@ public class CheatActivity extends AppCompatActivity {
   @Override
   protected void onResume() {
     super.onResume();
-
     Log.d(TAG, "onResume");
   }
 
   @Override
   protected void onPause() {
     super.onPause();
-
     Log.d(TAG, "onPause");
   }
 
   @Override
   protected void onDestroy() {
     super.onDestroy();
-
     Log.d(TAG, "onDestroy");
   }
 
   @Override
   protected void onSaveInstanceState(Bundle outState) {
     super.onSaveInstanceState(outState);
+    Log.d(TAG, "onSaveInstanceState");
 
     outState.putInt(KEY_ANSWER, currentAnswer);
     outState.putBoolean(KEY_CHEATED, answerCheated);
   }
-
-  private void initLayoutData() {
-    Intent intent = getIntent();
-
-    if ( intent != null) {
-      currentAnswer = intent.getExtras().getInt(EXTRA_ANSWER);
-    }
-  }
-
-  private void initLayoutButtons() {
-
-    noButton.setOnClickListener(v -> onNoButtonClicked());
-    yesButton.setOnClickListener(v -> onYesButtonClicked());
-  }
-
-  private void linkLayoutComponents() {
-    noButton = findViewById(R.id.noButton);
-    yesButton = findViewById(R.id.yesButton);
-
-    answerField = findViewById(R.id.answerField);
-  }
-
 
   private void returnCheatedStatus() {
     Log.d(TAG, "returnCheatedStatus");
@@ -127,6 +102,8 @@ public class CheatActivity extends AppCompatActivity {
 
 
   private void onYesButtonClicked() {
+    Log.d(TAG, "onYesButtonClicked");
+
     yesButton.setEnabled(false);
     noButton.setEnabled(false);
     answerCheated = true;
@@ -134,6 +111,7 @@ public class CheatActivity extends AppCompatActivity {
   }
 
   private void updateLayoutContent() {
+    Log.d(TAG, "updateLayoutContent");
 
     if(currentAnswer == 0) {
       answerField.setText(R.string.false_text);
@@ -144,11 +122,36 @@ public class CheatActivity extends AppCompatActivity {
   }
 
   private void onNoButtonClicked() {
+    Log.d(TAG, "onNoButtonClicked");
+
     yesButton.setEnabled(false);
     noButton.setEnabled(false);
 
     returnCheatedStatus();
   }
 
+
+  private void initLayoutData() {
+    Log.d(TAG, "initLayoutData");
+
+    Intent intent = getIntent();
+
+    if ( intent != null) {
+      currentAnswer = intent.getExtras().getInt(EXTRA_ANSWER);
+    }
+  }
+
+  private void initLayoutButtons() {
+
+    noButton.setOnClickListener(v -> onNoButtonClicked());
+    yesButton.setOnClickListener(v -> onYesButtonClicked());
+  }
+
+  private void linkLayoutComponents() {
+    noButton = findViewById(R.id.noButton);
+    yesButton = findViewById(R.id.yesButton);
+
+    answerField = findViewById(R.id.answerField);
+  }
 
 }
