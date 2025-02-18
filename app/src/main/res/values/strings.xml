@@ -29,6 +29,7 @@
     <string name="true_text">True</string>
 
     <string name="empty_text">\???</string>
+    <!--<string name="question_1">Question #1: True</string>-->
 
     <string-array name="questions_array">
         <item>Question #1: True</item>

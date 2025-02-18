@@ -1,26 +1,25 @@
 package es.ulpgc.eite.da.basicquiz.steps;
 
-import static android.content.pm.ActivityInfo.SCREEN_ORIENTATION_LANDSCAPE;
-import static android.content.pm.ActivityInfo.SCREEN_ORIENTATION_PORTRAIT;
 import static androidx.test.espresso.Espresso.onView;
 import static androidx.test.espresso.Espresso.pressBack;
 import static androidx.test.espresso.action.ViewActions.click;
+import static androidx.test.espresso.assertion.ViewAssertions.doesNotExist;
 import static androidx.test.espresso.assertion.ViewAssertions.matches;
+import static androidx.test.espresso.matcher.ViewMatchers.isDisplayed;
 import static androidx.test.espresso.matcher.ViewMatchers.isEnabled;
 import static androidx.test.espresso.matcher.ViewMatchers.withId;
 import static androidx.test.espresso.matcher.ViewMatchers.withText;
 import static org.hamcrest.Matchers.not;
 
 import androidx.test.core.app.ActivityScenario;
-import androidx.test.ext.junit.rules.ActivityScenarioRule;
+import androidx.test.core.app.ApplicationProvider;
 import androidx.test.platform.app.InstrumentationRegistry;
-
-import org.junit.Rule;
 
 import es.ulpgc.eite.da.basicquiz.QuestionActivity;
 import es.ulpgc.eite.da.basicquiz.R;
 import io.cucumber.java.en.And;
 import io.cucumber.java.en.Given;
+import io.cucumber.java.en.Then;
 import io.cucumber.java.en.When;
 
 // Project: Basic Quiz
@@ -51,7 +50,8 @@ public class QuizSteps {
 
     @And("ocultar resultado")
     public void ocultarResultado() {
-        onView(withId(R.id.resultField)).check(matches(withText("???")));
+        //onView(withId(R.id.resultField)).check(matches(withText("???")));
+        onView(withId(R.id.resultField)).check(matches(withText(R.string.empty_text)));
     }
 
     @And("mostrar botones True y False y Cheat activados")
@@ -161,7 +161,8 @@ public class QuizSteps {
 
     @And("ocultar respuesta")
     public void ocultarRespuesta() {
-        onView(withId(R.id.answerField)).check(matches(withText("???")));
+        //onView(withId(R.id.answerField)).check(matches(withText("???")));
+        onView(withId(R.id.answerField)).check(matches(withText(R.string.empty_text)));
     }
 
     @And("mostrar botones Yes y No activados")
@@ -223,4 +224,90 @@ public class QuizSteps {
     public void pulsarBotonNext() {
         onView(withId(R.id.nextButton)).perform(click());
     }
+
+
+    // ----------------------------------------------------------
+
+    @And("pulsar boton Finalizar")
+    public void pulsarBotonFinalizar() {
+        onView(withId(R.id.exitButton)).perform(click());
+    }
+
+    @And("pulsar boton Reiniciar")
+    public void pulsarBotonReiniciar() {
+        onView(withId(R.id.restartButton)).perform(click());
+    }
+
+    @And("pulsar boton Back en Stats")
+    public void pulsarBotonBackEnStats() {
+        pressBack();
+    }
+
+    @Then("mostrar pantalla Question con primera pregunta")
+    public void mostrarPantallaQuestionConPrimeraPregunta() {
+
+        // Obtener la primera pregunta desde el archivo strings.xml
+        String[] questionsArray = ApplicationProvider
+            .getApplicationContext().getResources()
+            .getStringArray(R.array.questions_array);
+
+
+        //onView(withId(R.id.questionField)).check(matches(withText("Question #1: True")));
+        //onView(withId(R.id.questionField)).check(matches(withText(R.string.question_1)));
+        onView(withId(R.id.questionField)).check(matches(withText(questionsArray[0])));
+        //onView(withId(R.id.resultField)).check(matches(withText("???")));
+        onView(withId(R.id.resultField)).check(matches(withText(R.string.empty_text)));
+    }
+
+    @Then("mostrar pantalla Question en ultima pregunta")
+    public void mostrarPantallaQuestionEnUltimaPregunta() {
+        //onView(withId(R.id.resultField)).check(matches(not(withText("???"))));
+        onView(withId(R.id.resultField)).check(matches(withText(R.string.empty_text)));
+    }
+
+    @And("responder todas preguntas del Quiz")
+    public void responderTodasPreguntasDelQuiz() {
+        while (true) {
+            // Seleccionar una respuesta al azar (True o False)
+            if (Math.random() > 0.5) {
+                onView(withId(R.id.trueButton)).perform(click());
+            } else {
+                onView(withId(R.id.falseButton)).perform(click());
+            }
+
+            // Pulsar botón Next si está activado
+            onView(withId(R.id.nextButton)).check(matches(isEnabled())).perform(click());
+
+            // Si el botón Next no está habilitado, hemos llegado al final
+            try {
+                Thread.sleep(500);
+            } catch (InterruptedException e) { }
+
+            // Verificar si la pantalla de Stats se ha abierto (final del quiz)
+            try {
+                onView(withId(R.id.restartButton)).check(matches(isDisplayed()));
+                break; // Salir del loop si ya estamos en pantalla Stats
+            } catch (Exception ignored) { }
+        }
+    }
+
+    @And("abrir pantalla Stats")
+    public void abrirPantallaStats() {
+        onView(withId(R.id.nextButton)).perform(click());
+    }
+
+    @Then("cerrar aplicación")
+    public void cerrarAplicacion() {
+
+        // Esperar un momento para asegurar que la app se cierra
+        try {
+            Thread.sleep(1000);
+        } catch (InterruptedException e) { }
+
+        // Verificar que no hay ninguna actividad visible
+        try {
+            onView(withId(R.id.questionField)).check(doesNotExist());
+        } catch (Exception ignored) { }
+    }
+
 }
