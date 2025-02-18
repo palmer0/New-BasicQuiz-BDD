@@ -250,18 +250,6 @@ public class QuestionActivity extends AppCompatActivity {
 
         Log.d(TAG, "onActivityResult");
 
-        /*
-        if (requestCode == STATS_REQUEST && resultCode == RESULT_OK) {
-            boolean shouldExit =
-                intent.getBooleanExtra(StatsActivity.EXTRA_EXIT, false);
-
-            // Finalizar pantalla "Question" cuando pantalla "Stats" lo indique
-            if (shouldExit) {
-                finish();
-            }
-        }
-        */
-
         if (requestCode == STATS_REQUEST && resultCode == RESULT_OK && intent != null) {
             if (intent.getBooleanExtra(StatsActivity.EXTRA_EXIT, false)) {
                 finish(); // Finalizar app
@@ -351,15 +339,5 @@ public class QuestionActivity extends AppCompatActivity {
         startActivityForResult(intent, STATS_REQUEST); // Código de solicitud
     }
 
-
-    /*
-    private void openStatsScreen() {
-        Intent intent = new Intent(this, StatsActivity.class);
-        intent.putExtra(StatsActivity.EXTRA_TOTAL_QUESTIONS, totalQuestions);
-        intent.putExtra(StatsActivity.EXTRA_CORRECT_ANSWERS, correctAnswers);
-        startActivity(intent);
-        finish();
-    }
-    */
 
 }

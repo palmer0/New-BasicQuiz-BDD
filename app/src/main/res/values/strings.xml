@@ -8,10 +8,6 @@
 
 
     <string name="stats_screen_title">Stats Screen</string>
-    <!--
-    <string name="stats_message">You answered %d out of %d questions correctly!</string>
-    <string name="stats_message_default">No data available.</string>
-    -->
     <string name="total_questions_text">Total Questions</string>
     <string name="correct_answers_text">Correct Answers</string>
     <string name="restart_button_label">Restart Quiz</string>

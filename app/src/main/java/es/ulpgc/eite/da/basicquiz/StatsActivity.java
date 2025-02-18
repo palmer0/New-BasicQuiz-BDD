@@ -18,7 +18,6 @@ public class StatsActivity extends AppCompatActivity {
     public static final String EXTRA_RESET = "EXTRA_RESET_QUIZ";
     public static final String EXTRA_BACK = "EXTRA_BACK_PRESSED";
 
-    //private TextView statsField;
     private TextView totalQuestionsField, correctAnswersField;
     private Button restartButton, exitButton;
 
@@ -37,40 +36,6 @@ public class StatsActivity extends AppCompatActivity {
         updateLayoutContent();
         initLayoutButtons();
 
-        /*
-        //statsField = findViewById(R.id.statsText);
-        totalQuestionsField = findViewById(R.id.totalQuestionsField);
-        correctAnswersField = findViewById(R.id.correctAnswersField);
-
-        restartButton = findViewById(R.id.restartButton);
-        exitButton = findViewById(R.id.exitButton);
-        */
-
-        /*
-        // Obtener valores pasados desde pantalla "Question"
-        int totalQuestions = getIntent().getIntExtra(EXTRA_QUESTIONS, 0);
-        int correctAnswers = getIntent().getIntExtra(EXTRA_ANSWERS, 0);
-        */
-
-        /*
-        // Mostrar resultados
-        totalQuestionsField.setText(
-            getString(R.string.total_questions_text) + ": " + totalQuestions
-        );
-        correctAnswersField.setText(
-            getString(R.string.correct_answers_text) + ": " + correctAnswers
-        );
-        //statsText.setText(getString(R.string.stats_message, correctAnswers, totalQuestions));
-        */
-
-
-        /*
-        // Reiniciar Quiz
-        restartButton.setOnClickListener(v -> onRestartButtonClicked());
-        // Finalizar app
-        exitButton.setOnClickListener(v -> onExitButtonClicked());
-        //exitButton.setOnClickListener(v -> finishAffinity());
-        */
     }
 
     private void updateLayoutContent() {
@@ -89,6 +54,7 @@ public class StatsActivity extends AppCompatActivity {
         restartButton.setOnClickListener(v -> onRestartButtonClicked());
         // Finalizar app
         exitButton.setOnClickListener(v -> onExitButtonClicked());
+
         //exitButton.setOnClickListener(v -> finishAffinity());
     }
 
@@ -145,34 +111,16 @@ public class StatsActivity extends AppCompatActivity {
 
         setQuestionResult(EXTRA_BACK);
 
-        /*
-        Intent intent = new Intent();
-        intent.putExtra(EXTRA_BACK, true);
-        setResult(RESULT_OK, intent);
-        finish(); // Finalizar pantalla "Stats"
-        */
     }
 
     private void onExitButtonClicked() {
         setQuestionResult(EXTRA_EXIT);
 
-        /*
-        Intent intent = new Intent();
-        intent.putExtra(EXTRA_EXIT, true);
-        setResult(RESULT_OK, intent);
-        finish(); // Finalizar pantalla "Stats"
-        */
     }
 
     private void onRestartButtonClicked() {
         setQuestionResult(EXTRA_RESET);
 
-        /*
-        Intent intent = new Intent();
-        intent.putExtra(EXTRA_RESET, true);
-        setResult(RESULT_OK, intent);
-        finish(); // Finalizar pantalla "Stats"
-        */
     }
 
     private void setQuestionResult(String extraKey) {
@@ -182,12 +130,4 @@ public class StatsActivity extends AppCompatActivity {
         finish(); // Finalizar pantalla "Stats"
     }
 
-    /*
-    private void onRestartButtonClicked() {
-        Intent intent = new Intent(this, QuestionActivity.class);
-        intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
-        startActivity(intent);
-        finish();
-    }
-    */
 }
