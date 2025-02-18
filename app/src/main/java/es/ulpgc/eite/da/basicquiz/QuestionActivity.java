@@ -38,7 +38,6 @@ public class QuestionActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_question);
         setTitle(R.string.question_screen_title);
-
         Log.d(TAG, "onCreate");
 
         initLayoutData();
@@ -58,28 +57,24 @@ public class QuestionActivity extends AppCompatActivity {
     @Override
     protected void onResume() {
         super.onResume();
-
         Log.d(TAG, "onResume");
     }
 
     @Override
     protected void onPause() {
         super.onPause();
-
         Log.d(TAG, "onPause");
     }
 
     @Override
     protected void onDestroy() {
         super.onDestroy();
-
         Log.d(TAG, "onDestroy");
     }
 
     @Override
     protected void onSaveInstanceState(Bundle outState) {
         super.onSaveInstanceState(outState);
-
         Log.d(TAG, "onSaveInstanceState");
 
         outState.putInt(KEY_INDEX, questionIndex);
@@ -88,29 +83,6 @@ public class QuestionActivity extends AppCompatActivity {
         outState.putBoolean(KEY_ENABLED, nextButtonEnabled);
     }
 
-    private void initLayoutButtons() {
-
-        trueButton.setOnClickListener(v -> onTrueButtonClicked());
-        falseButton.setOnClickListener(v -> onFalseButtonClicked());
-        nextButton.setOnClickListener(v -> onNextButtonClicked());
-        cheatButton.setOnClickListener(v -> onCheatButtonClicked());
-    }
-
-
-    private void initLayoutData() {
-        questionsArray = getResources().getStringArray(R.array.questions_array);
-        answersArray = getResources().getIntArray(R.array.answers_array);
-    }
-
-    private void linkLayoutComponents() {
-        falseButton = findViewById(R.id.falseButton);
-        trueButton = findViewById(R.id.trueButton);
-        cheatButton = findViewById(R.id.cheatButton);
-        nextButton = findViewById(R.id.nextButton);
-
-        questionField = findViewById(R.id.questionField);
-        resultField = findViewById(R.id.resultField);
-    }
 
     /*
     private void updateLayoutContent() {
@@ -171,6 +143,8 @@ public class QuestionActivity extends AppCompatActivity {
     */
 
     private void updateLayoutContent() {
+        Log.d(TAG, "updateLayoutContent");
+
         questionField.setText(questionsArray[questionIndex]);
 
         if (!nextButtonEnabled) {
@@ -211,6 +185,8 @@ public class QuestionActivity extends AppCompatActivity {
 
 
     private void onTrueButtonClicked() {
+        Log.d(TAG, "onTrueButtonClicked");
+
         if (answersArray[questionIndex] == 1) {
             resultText = getString(R.string.correct_text);
             correctAnswers++;
@@ -224,6 +200,8 @@ public class QuestionActivity extends AppCompatActivity {
     }
 
     private void onFalseButtonClicked() {
+        Log.d(TAG, "onFalseButtonClicked");
+
         if (answersArray[questionIndex] == 0) {
             resultText = getString(R.string.correct_text);
             correctAnswers++;
@@ -238,6 +216,7 @@ public class QuestionActivity extends AppCompatActivity {
 
     @SuppressWarnings("ALL")
     private void onCheatButtonClicked() {
+        Log.d(TAG, "onCheatButtonClicked");
 
         Intent intent = new Intent(this, CheatActivity.class);
         intent.putExtra(CheatActivity.EXTRA_ANSWER, answersArray[questionIndex]);
@@ -247,7 +226,6 @@ public class QuestionActivity extends AppCompatActivity {
     @Override
     public void onActivityResult(int requestCode, int resultCode, Intent intent) {
         super.onActivityResult(requestCode, resultCode, intent);
-
         Log.d(TAG, "onActivityResult");
 
         if (requestCode == STATS_REQUEST && resultCode == RESULT_OK && intent != null) {
@@ -288,6 +266,8 @@ public class QuestionActivity extends AppCompatActivity {
 
 
     private void resetQuiz() {
+        Log.d(TAG, "resetQuiz");
+
         questionIndex = 0;
         correctAnswers = 0;
         totalQuestions = 0;
@@ -321,6 +301,8 @@ public class QuestionActivity extends AppCompatActivity {
 //    }
 
     private void onNextButtonClicked() {
+        Log.d(TAG, "onNextButtonClicked");
+
         nextButtonEnabled = false;
         questionIndex++;
 
@@ -333,6 +315,8 @@ public class QuestionActivity extends AppCompatActivity {
 
     @SuppressWarnings("ALL")
     private void openStatsScreen() {
+        Log.d(TAG, "openStatsScreen");
+
         Intent intent = new Intent(this, StatsActivity.class);
         intent.putExtra(StatsActivity.EXTRA_QUESTIONS, totalQuestions);
         intent.putExtra(StatsActivity.EXTRA_ANSWERS, correctAnswers);
@@ -340,4 +324,27 @@ public class QuestionActivity extends AppCompatActivity {
     }
 
 
+    private void initLayoutButtons() {
+
+        trueButton.setOnClickListener(v -> onTrueButtonClicked());
+        falseButton.setOnClickListener(v -> onFalseButtonClicked());
+        nextButton.setOnClickListener(v -> onNextButtonClicked());
+        cheatButton.setOnClickListener(v -> onCheatButtonClicked());
+    }
+
+
+    private void initLayoutData() {
+        questionsArray = getResources().getStringArray(R.array.questions_array);
+        answersArray = getResources().getIntArray(R.array.answers_array);
+    }
+
+    private void linkLayoutComponents() {
+        falseButton = findViewById(R.id.falseButton);
+        trueButton = findViewById(R.id.trueButton);
+        cheatButton = findViewById(R.id.cheatButton);
+        nextButton = findViewById(R.id.nextButton);
+
+        questionField = findViewById(R.id.questionField);
+        resultField = findViewById(R.id.resultField);
+    }
 }

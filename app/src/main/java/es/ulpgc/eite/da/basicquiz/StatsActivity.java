@@ -28,7 +28,6 @@ public class StatsActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_stats);
         setTitle(R.string.stats_screen_title);
-
         Log.d(TAG, "onCreate");
 
         initLayoutData();
@@ -38,7 +37,68 @@ public class StatsActivity extends AppCompatActivity {
 
     }
 
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        Log.d(TAG, "onResume");
+    }
+
+    @Override
+    protected void onPause() {
+        super.onPause();
+        Log.d(TAG, "onPause");
+    }
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        Log.d(TAG, "onDestroy");
+    }
+
+    @Override
+    protected void onSaveInstanceState(Bundle outState) {
+        super.onSaveInstanceState(outState);
+        Log.d(TAG, "onSaveInstanceState");
+
+    }
+
+    @Override
+    @SuppressWarnings("ALL")
+    public void onBackPressed() {
+        //super.onBackPressed();
+        Log.d(TAG, "onBackPressed");
+
+        setQuestionResult(EXTRA_BACK);
+
+    }
+
+    private void onExitButtonClicked() {
+        Log.d(TAG, "onExitButtonClicked");
+
+        setQuestionResult(EXTRA_EXIT);
+
+    }
+
+    private void onRestartButtonClicked() {
+        Log.d(TAG, "onRestartButtonClicked");
+
+        setQuestionResult(EXTRA_RESET);
+
+    }
+
+    private void setQuestionResult(String extraKey) {
+        Log.d(TAG, "setQuestionResult");
+
+        Intent intent = new Intent();
+        intent.putExtra(extraKey, true);
+        setResult(RESULT_OK, intent);
+        finish(); // Finalizar pantalla "Stats"
+    }
+
+
     private void updateLayoutContent() {
+        Log.d(TAG, "updateLayoutContent");
 
         // Mostrar resultados
         totalQuestionsField.setText(
@@ -73,61 +133,6 @@ public class StatsActivity extends AppCompatActivity {
         // Obtener valores pasados desde pantalla "Question"
         totalQuestions = getIntent().getIntExtra(EXTRA_QUESTIONS, 0);
         correctAnswers = getIntent().getIntExtra(EXTRA_ANSWERS, 0);
-    }
-
-    @Override
-    protected void onResume() {
-        super.onResume();
-
-        Log.d(TAG, "onResume");
-    }
-
-    @Override
-    protected void onPause() {
-        super.onPause();
-
-        Log.d(TAG, "onPause");
-    }
-
-    @Override
-    protected void onDestroy() {
-        super.onDestroy();
-
-        Log.d(TAG, "onDestroy");
-    }
-
-    @Override
-    protected void onSaveInstanceState(Bundle outState) {
-        super.onSaveInstanceState(outState);
-
-        Log.d(TAG, "onSaveInstanceState");
-    }
-
-    @Override
-    @SuppressWarnings("ALL")
-    public void onBackPressed() {
-        //super.onBackPressed();
-        Log.d(TAG, "onBackPressed");
-
-        setQuestionResult(EXTRA_BACK);
-
-    }
-
-    private void onExitButtonClicked() {
-        setQuestionResult(EXTRA_EXIT);
-
-    }
-
-    private void onRestartButtonClicked() {
-        setQuestionResult(EXTRA_RESET);
-
-    }
-
-    private void setQuestionResult(String extraKey) {
-        Intent intent = new Intent();
-        intent.putExtra(extraKey, true);
-        setResult(RESULT_OK, intent);
-        finish(); // Finalizar pantalla "Stats"
     }
 
 }
