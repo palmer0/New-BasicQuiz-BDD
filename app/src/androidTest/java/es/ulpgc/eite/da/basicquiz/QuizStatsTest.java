@@ -31,9 +31,17 @@ public class QuizStatsTest {
         new ActivityScenarioRule<>(QuestionActivity.class);
 
     @Test
+    /*
+    Para poder ejecutar estos tests, es necesario modificar el archivo "build.gradle"
+    del modulo "app" para usar AndroidJUnitRunner en vez de CucumberAndroidJUnitRunner:
+
+        testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
+        //testInstrumentationRunner "io.cucumber.android.runner.CucumberAndroidJUnitRunner"
+    */
     public void test() {
 
         /*
+
         // Obtener lista de preguntas y respuestas desde archivo "strings.xml"
         String[] questionsArray = ApplicationProvider
             .getApplicationContext().getResources()
