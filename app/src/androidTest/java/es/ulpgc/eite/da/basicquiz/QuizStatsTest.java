@@ -12,6 +12,7 @@ import static androidx.test.espresso.matcher.ViewMatchers.withText;
 import static org.hamcrest.Matchers.allOf;
 import static org.hamcrest.Matchers.not;
 
+import androidx.test.core.app.ApplicationProvider;
 import androidx.test.espresso.ViewInteraction;
 import androidx.test.ext.junit.rules.ActivityScenarioRule;
 import androidx.test.ext.junit.runners.AndroidJUnit4;
@@ -26,46 +27,88 @@ import org.junit.runner.RunWith;
 public class QuizStatsTest {
 
     @Rule
-    public ActivityScenarioRule<QuestionActivity> mActivityScenarioRule =
+    public ActivityScenarioRule<QuestionActivity> scenarioRule =
         new ActivityScenarioRule<>(QuestionActivity.class);
 
     @Test
     public void test() {
 
+        /*
+        // Obtener lista de preguntas y respuestas desde archivo "strings.xml"
+        String[] questionsArray = ApplicationProvider
+            .getApplicationContext().getResources()
+            .getStringArray(R.array.questions_array);
+        String[] answersArray = ApplicationProvider
+            .getApplicationContext().getResources()
+            .getStringArray(R.array.answers_array);
+
+        // Obtener textos de botones desde archivo "strings.xml"
+        String trueButtonLabel = ApplicationProvider
+            .getApplicationContext().getResources()
+            .getString(R.string.true_button_label);
+        String nextButtonLabel = ApplicationProvider
+            .getApplicationContext().getResources()
+            .getString(R.string.next_button_label);
+        String cheatButtonLabel = ApplicationProvider
+            .getApplicationContext().getResources()
+            .getString(R.string.cheat_button_label);
+        String statsButtonLabel = ApplicationProvider
+            .getApplicationContext().getResources()
+            .getString(R.string.stats_button_label);
+        String yesButtonLabel = ApplicationProvider
+            .getApplicationContext().getResources()
+            .getString(R.string.yes_button_label);
+        String restartButtonLabel = ApplicationProvider
+            .getApplicationContext().getResources()
+            .getString(R.string.restart_button_label);
+
+        // Obtener textos a mostrar desde archivo "strings.xml"
+        String emptyText = ApplicationProvider
+            .getApplicationContext().getResources()
+            .getString(R.string.empty_text);
+        String totalQuestionsText = ApplicationProvider
+            .getApplicationContext().getResources()
+            .getString(R.string.total_questions_text);
+        String correctAnswersText = ApplicationProvider
+            .getApplicationContext().getResources()
+            .getString(R.string.correct_answers_text);
+
+        */
+
         // Estamos en pantalla "Question" y respondemos a primera pregunta
-        ViewInteraction materialButton = onView(
-            allOf(withId(R.id.trueButton), withText("True"), isEnabled()));
-        materialButton.perform(click());
+        ViewInteraction button1 =
+            onView(allOf(withId(R.id.trueButton), withText("True"), isEnabled()));
+        button1.perform(click());
 
         // Estamos en pantalla "Question" y pasamos a segunda pregunta
-        ViewInteraction materialButton2 = onView(
-            allOf(withId(R.id.nextButton), withText("Next"), isEnabled()));
-        materialButton2.perform(click());
+        ViewInteraction button12 =
+            onView(allOf(withId(R.id.nextButton), withText("Next"), isEnabled()));
+        button12.perform(click());
 
         // Estamos en pantalla "Question" y respondemos a segunda pregunta
-        ViewInteraction materialButton3 = onView(
-            allOf(withId(R.id.trueButton), withText("True"), isEnabled()));
-        materialButton3.perform(click());
+        ViewInteraction button13 =
+            onView(allOf(withId(R.id.trueButton), withText("True"), isEnabled()));
+        button13.perform(click());
 
-        // Estamos en pantalla "Question" y pasamos a tercera pregunta
-        ViewInteraction materialButton4 = onView(
-            allOf(withId(R.id.nextButton), withText("Next"), isEnabled()));
-        materialButton4.perform(click());
+        // Estamos en pantalla "Question" y pasamos a tercera y ultima pregunta
+        ViewInteraction button14 =
+            onView(allOf(withId(R.id.nextButton), withText("Next"), isEnabled()));
+        button14.perform(click());
 
         // Estamos en pantalla "Question" y verificamos estado boton "Stats"
-        ViewInteraction button2 = onView(
-            allOf(withId(R.id.statsButton), withText("Stats"), isDisplayed()));
+        ViewInteraction button2 =
+            onView(allOf(withId(R.id.statsButton), withText("Stats"), isDisplayed()));
         button2.check(matches(not(isEnabled())));
 
         // Estamos en pantalla "Question" y pasamos a pantalla "Cheat"
-        ViewInteraction materialButton5 = onView(
-            allOf(withId(R.id.cheatButton), withText("Cheat"), isEnabled()));
-        materialButton5.perform(click());
+        ViewInteraction button15 =
+            onView(allOf(withId(R.id.cheatButton), withText("Cheat"), isEnabled()));
+        button15.perform(click());
 
-        // Estamos en pantalla "Cheat" y vemos respuesta a tercera pregunta
-        ViewInteraction materialButton6 = onView(
-            allOf(withId(R.id.yesButton), withText("Yes"), isEnabled()));
-        materialButton6.perform(click());
+        // Estamos en pantalla "Cheat" y vemos respuesta a tercera y ultima pregunta
+        ViewInteraction button16 =
+            onView(allOf(withId(R.id.yesButton), withText("Yes"), isEnabled()));
+        button16.perform(click());
 
 
         // Estamos en pantalla "Cheat" y volvemos a pantalla "Question"
@@ -73,63 +116,62 @@ public class QuizStatsTest {
 
 
         // Estamos en pantalla "Question" y verificamos estado boton "True"
-        ViewInteraction button = onView(
-            allOf(withId(R.id.trueButton), withText("True"), isDisplayed()));
-        button.check(matches(not(isEnabled())));
+        ViewInteraction button8 =
+            onView(allOf(withId(R.id.trueButton), withText("True"), isDisplayed()));
+        button8.check(matches(not(isEnabled())));
 
 
 
         // Estamos en pantalla "Question" y verificamos tercera pregunta
-        ViewInteraction textView = onView(
-            allOf(withId(R.id.questionField), isDisplayed()));
-        textView.check(matches(withText("Question #3: True")));
+        ViewInteraction textView7 =
+            onView(allOf(withId(R.id.questionField), isDisplayed()));
+        textView7.check(matches(withText("Question #3: True")));
 
         // Estamos en pantalla "Question" y verificamos resultado de tercera pregunta
-        ViewInteraction textView2 = onView(
-            allOf(withId(R.id.resultField), isDisplayed()));
+        ViewInteraction textView2 =
+            onView(allOf(withId(R.id.resultField), isDisplayed()));
         textView2.check(matches(withText("???")));
 
 
         // Estamos en pantalla "Question" y pasamos a pantalla "Stats"
-        ViewInteraction materialButton7 = onView(
-            allOf(withId(R.id.statsButton), withText("Stats"), isEnabled()));
-        materialButton7.perform(click());
+        ViewInteraction button17 =
+            onView(allOf(withId(R.id.statsButton), withText("Stats"), isEnabled()));
+        button17.perform(click());
 
 
         // Estamos en pantalla "Stats" y verificamos datos estadisticos
-        ViewInteraction textView3 = onView(
-            allOf(withId(R.id.totalQuestionsField), isDisplayed()));
+        ViewInteraction textView3 =
+            onView(allOf(withId(R.id.totalQuestionsField), isDisplayed()));
         textView3.check(matches(withText("Total Questions: 2")));
-        ViewInteraction textView4 = onView(
-            allOf(withId(R.id.correctAnswersField), isDisplayed()));
+        ViewInteraction textView4 =
+            onView(allOf(withId(R.id.correctAnswersField), isDisplayed()));
         textView4.check(matches(withText("Correct Answers: 1")));
 
 
         // Estamos en pantalla "Stats" y pasamos a pantalla "Question"
-        ViewInteraction materialButton8 = onView(
-            allOf(withId(R.id.restartButton), withText("Restart Quiz"), isDisplayed()));
-        materialButton8.perform(click());
+        ViewInteraction button18 =
+            onView(allOf(withId(R.id.restartButton), withText("Restart Quiz"), isEnabled()));
+        button18.perform(click());
 
         // Estamos en pantalla "Question" y verificamos reinicio del Quiz
-        ViewInteraction textView5 = onView(
-            allOf(withId(R.id.questionField), isDisplayed()));
+        ViewInteraction textView5 =
+            onView(allOf(withId(R.id.questionField), isDisplayed()));
         textView5.check(matches(withText("Question #1: True")));
-        ViewInteraction textView6 = onView(
-            allOf(withId(R.id.resultField), withText("???"), isDisplayed()));
+        ViewInteraction textView6 =
+            onView(allOf(withId(R.id.resultField), isDisplayed()));
         textView6.check(matches(withText("???")));
-        ViewInteraction button4 = onView(
-            allOf(withId(R.id.trueButton), withText("True"), isDisplayed()));
+        ViewInteraction button4 =
+            onView(allOf(withId(R.id.trueButton), withText("True"), isDisplayed()));
         button4.check(matches(isEnabled()));
-        ViewInteraction button5 = onView(
-            allOf(withId(R.id.nextButton), withText("Next"), isDisplayed()));
+        ViewInteraction button5 =
+            onView(allOf(withId(R.id.nextButton), withText("Next"), isDisplayed()));
         button5.check(matches(not(isEnabled())));
-        ViewInteraction button6 = onView(
-            allOf(withId(R.id.cheatButton), withText("Cheat"), isDisplayed()));
+        ViewInteraction button6 =
+            onView(allOf(withId(R.id.cheatButton), withText("Cheat"), isDisplayed()));
         button6.check(matches(isEnabled()));
-        ViewInteraction button7 = onView(
-            allOf(withId(R.id.statsButton), withText("Stats"), isDisplayed()));
+        ViewInteraction button7 =
+            onView(allOf(withId(R.id.statsButton), withText("Stats"), isDisplayed()));
         button7.check(matches(not(isEnabled())));
-
 
     }
 
