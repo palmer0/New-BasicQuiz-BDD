@@ -5,7 +5,7 @@ Feature: Stats
     And responder todas preguntas del Quiz
     And abrir pantalla Stats
     And pulsar boton Back en Stats
-    Then mostrar pantalla Question en ultima pregunta
+    Then mostrar pantalla Question con ultima pregunta
 
   Scenario: Reiniciar Quiz desde Stats
     Given iniciar pantalla Question

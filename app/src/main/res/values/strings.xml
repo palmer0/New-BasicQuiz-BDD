@@ -21,6 +21,7 @@
     <string name="cheat_button_label">Cheat</string>
     <string name="no_button_label">No</string>
     <string name="yes_button_label">Yes</string>
+    <string name="stats_button_label">Stats</string>
 
     <string name="warning_text">Are you sure?</string>
     <string name="correct_text">Correct!</string>

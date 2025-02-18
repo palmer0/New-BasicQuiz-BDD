@@ -228,25 +228,38 @@ public class QuizSteps {
 
     // ----------------------------------------------------------
 
+
     @And("pulsar boton Finalizar")
     public void pulsarBotonFinalizar() {
         onView(withId(R.id.exitButton)).perform(click());
+
+        try {
+            Thread.sleep(500);
+        } catch (InterruptedException e) { }
     }
 
     @And("pulsar boton Reiniciar")
     public void pulsarBotonReiniciar() {
         onView(withId(R.id.restartButton)).perform(click());
+
+        try {
+            Thread.sleep(500);
+        } catch (InterruptedException e) { }
     }
 
     @And("pulsar boton Back en Stats")
     public void pulsarBotonBackEnStats() {
         pressBack();
+
+        try {
+            Thread.sleep(500);
+        } catch (InterruptedException e) { }
     }
 
     @Then("mostrar pantalla Question con primera pregunta")
     public void mostrarPantallaQuestionConPrimeraPregunta() {
 
-        // Obtener la primera pregunta desde el archivo strings.xml
+        // Obtener lista de preguntas desde archivo "strings.xml"
         String[] questionsArray = ApplicationProvider
             .getApplicationContext().getResources()
             .getStringArray(R.array.questions_array);
@@ -259,15 +272,34 @@ public class QuizSteps {
         onView(withId(R.id.resultField)).check(matches(withText(R.string.empty_text)));
     }
 
-    @Then("mostrar pantalla Question en ultima pregunta")
-    public void mostrarPantallaQuestionEnUltimaPregunta() {
+    @Then("mostrar pantalla Question con ultima pregunta")
+    public void mostrarPantallaQuestionConUltimaPregunta() {
+
+
+        // Obtener lista de preguntas desde archivo "strings.xml"
+        String[] questionsArray = ApplicationProvider
+            .getApplicationContext().getResources()
+            .getStringArray(R.array.questions_array);
+
+        onView(withId(R.id.questionField))
+            .check(matches(withText(questionsArray[questionsArray.length - 1])));
+
         //onView(withId(R.id.resultField)).check(matches(not(withText("???"))));
-        onView(withId(R.id.resultField)).check(matches(withText(R.string.empty_text)));
+        onView(withId(R.id.resultField))
+            .check(matches(not(withText(R.string.empty_text))));
+
     }
 
     @And("responder todas preguntas del Quiz")
     public void responderTodasPreguntasDelQuiz() {
-        while (true) {
+
+        // Obtener lista de preguntas desde archivo "strings.xml"
+        String[] questionsArray = ApplicationProvider
+            .getApplicationContext().getResources()
+            .getStringArray(R.array.questions_array);
+
+        for (int i = 0; i < questionsArray.length-1; i++) {
+
             // Seleccionar una respuesta al azar (True o False)
             if (Math.random() > 0.5) {
                 onView(withId(R.id.trueButton)).perform(click());
@@ -276,30 +308,52 @@ public class QuizSteps {
             }
 
             // Pulsar botón Next si está activado
-            onView(withId(R.id.nextButton)).check(matches(isEnabled())).perform(click());
+            onView(withId(R.id.nextButton))
+                .check(matches(isEnabled())).perform(click());
 
-            // Si el botón Next no está habilitado, hemos llegado al final
-            try {
-                Thread.sleep(500);
-            } catch (InterruptedException e) { }
 
-            // Verificar si la pantalla de Stats se ha abierto (final del quiz)
-            try {
-                onView(withId(R.id.restartButton)).check(matches(isDisplayed()));
-                break; // Salir del loop si ya estamos en pantalla Stats
-            } catch (Exception ignored) { }
         }
+
+        // Si el botón Next no está habilitado, hemos llegado al final
+        onView(withId(R.id.nextButton)).check(matches(not(isEnabled())));
+        onView(withId(R.id.questionField))
+            .check(matches(withText(questionsArray[questionsArray.length - 1])));
+
+        // El botón Stats debe estar no habilitado
+        onView(withId(R.id.statsButton)).check(matches(isEnabled()));
+
+        // Seleccionar una respuesta al azar (True o False)
+        if (Math.random() > 0.5) {
+            onView(withId(R.id.trueButton)).perform(click());
+        } else {
+            onView(withId(R.id.falseButton)).perform(click());
+        }
+
+        // El botón Stats debe estar habilitado
+        onView(withId(R.id.statsButton)).check(matches(isEnabled()));
+
+
     }
+
 
     @And("abrir pantalla Stats")
     public void abrirPantallaStats() {
-        onView(withId(R.id.nextButton)).perform(click());
+        onView(withId(R.id.statsButton)).perform(click());
+
+        try {
+            Thread.sleep(500);
+        } catch (InterruptedException e) { }
+
+        // Verificar si la pantalla de Stats se ha abierto (final del Quiz)
+        try {
+            onView(withId(R.id.restartButton)).check(matches(isDisplayed()));
+        } catch (Exception ignored) { }
     }
 
     @Then("cerrar aplicación")
     public void cerrarAplicacion() {
 
-        // Esperar un momento para asegurar que la app se cierra
+        // Esperar para asegurar que la app se cierra
         try {
             Thread.sleep(1000);
         } catch (InterruptedException e) { }

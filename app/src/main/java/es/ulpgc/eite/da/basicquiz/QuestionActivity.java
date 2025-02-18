@@ -19,13 +19,14 @@ public class QuestionActivity extends AppCompatActivity {
     public static final int CHEAT_REQUEST = 1;
     public static final int STATS_REQUEST = 2;
 
-    private Button falseButton, trueButton, cheatButton, nextButton;
+    private Button falseButton, trueButton;
+    private Button cheatButton, nextButton, statsButton;
     private TextView questionField, resultField;
 
     private String[] questionsArray;
     private int questionIndex = 0;
     private int[] answersArray;
-    private boolean nextButtonEnabled;
+    private boolean nextButtonEnabled, statsButtonEnabled;
     //private boolean trueButtonPressed;
 
     private String resultText;
@@ -153,10 +154,23 @@ public class QuestionActivity extends AppCompatActivity {
 
         resultField.setText(resultText);
 
-        nextButton.setEnabled(nextButtonEnabled);
+
+        //nextButton.setEnabled(nextButtonEnabled);
         cheatButton.setEnabled(!nextButtonEnabled);
         falseButton.setEnabled(!nextButtonEnabled);
         trueButton.setEnabled(!nextButtonEnabled);
+
+        if (questionIndex == questionsArray.length-1) {
+            nextButtonEnabled = false;
+            statsButtonEnabled = true;
+
+        } else {
+            statsButtonEnabled = false;
+        }
+
+        nextButton.setEnabled(nextButtonEnabled);
+        statsButton.setEnabled(statsButtonEnabled);
+
     }
 
 //    private void onTrueButtonClicked() {
@@ -273,8 +287,12 @@ public class QuestionActivity extends AppCompatActivity {
         totalQuestions = 0;
 
         nextButtonEnabled = false;
+        statsButtonEnabled = false;
 
         updateLayoutContent();
+        //statsButton.setEnabled(false);
+        statsButton.setEnabled(statsButtonEnabled);
+
     }
 
 //    private void onNextButtonClicked() {
@@ -308,10 +326,17 @@ public class QuestionActivity extends AppCompatActivity {
 
         if (questionIndex < questionsArray.length) {
             updateLayoutContent();
+
+        }
+
+        /*if (questionIndex < questionsArray.length) {
+            updateLayoutContent();
+
         } else {
             openStatsScreen();
-        }
+        }*/
     }
+
 
     @SuppressWarnings("ALL")
     private void openStatsScreen() {
@@ -330,6 +355,7 @@ public class QuestionActivity extends AppCompatActivity {
         falseButton.setOnClickListener(v -> onFalseButtonClicked());
         nextButton.setOnClickListener(v -> onNextButtonClicked());
         cheatButton.setOnClickListener(v -> onCheatButtonClicked());
+        statsButton.setOnClickListener(v -> openStatsScreen());
     }
 
 
@@ -343,6 +369,10 @@ public class QuestionActivity extends AppCompatActivity {
         trueButton = findViewById(R.id.trueButton);
         cheatButton = findViewById(R.id.cheatButton);
         nextButton = findViewById(R.id.nextButton);
+
+        statsButton = findViewById(R.id.statsButton);
+        //statsButton.setEnabled(false);
+        //statsButton.setEnabled(statsButtonEnabled);
 
         questionField = findViewById(R.id.questionField);
         resultField = findViewById(R.id.resultField);
