@@ -314,13 +314,13 @@ public class QuizSteps {
 
         }
 
-        // Si el botón Next no está habilitado, hemos llegado al final
+        // Como hemos llegado al final, el botón Next no está habilitado
         onView(withId(R.id.nextButton)).check(matches(not(isEnabled())));
         onView(withId(R.id.questionField))
             .check(matches(withText(questionsArray[questionsArray.length - 1])));
 
         // El botón Stats debe estar no habilitado
-        onView(withId(R.id.statsButton)).check(matches(isEnabled()));
+        onView(withId(R.id.statsButton)).check(matches(not(isEnabled())));
 
         // Seleccionar una respuesta al azar (True o False)
         if (Math.random() > 0.5) {
